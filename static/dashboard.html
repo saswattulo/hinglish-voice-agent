@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voice bot metrics</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="wrap wide">
+    <header>
+      <h1>Call metrics</h1>
+      <p class="sub">Every call and turn, from <code>logs/calls/</code>. Times in milliseconds.</p>
+      <nav><a href="/">← Back to the call page</a></nav>
+    </header>
+
+    <h2>Latency across all turns</h2>
+    <div id="agg" class="cards"></div>
+
+    <h2>Calls</h2>
+    <div class="scroll"><table id="calls"></table></div>
+
+    <section id="detail"></section>
+  </main>
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>

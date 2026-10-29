@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sanjeevani Clinic voice bot</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <h1>Sanjeevani Clinic</h1>
+      <p class="sub">Hinglish appointment line · Cartesia Ink STT + Claude + Cartesia Sonic TTS</p>
+      <nav><a href="/dashboard">Metrics dashboard →</a></nav>
+    </header>
+
+    <section class="call">
+      <button id="callBtn" class="btn primary">Start call</button>
+      <span id="status" class="status">Idle</span>
+      <span id="meter" class="meter"><span></span></span>
+    </section>
+
+    <section id="booking" class="booking" hidden></section>
+
+    <section class="log" id="log" aria-live="polite"></section>
+    <p id="partial" class="partial"></p>
+
+    <section class="hint">
+      <p>Try: <em>"Mujhe kal Dr. Sharma ke saath appointment chahiye, subah ka time."</em></p>
+      <p>Use headphones for the cleanest barge-in. Every call is logged under <code>logs/calls/</code>.</p>
+    </section>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
