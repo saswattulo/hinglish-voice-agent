@@ -1,4 +1,4 @@
-# Hinglish clinic voice bot
+# Hinglish Voice Agent
 
 A browser voice agent that books appointments at a (pretend) Bangalore clinic, in Hinglish.
 It runs on Cartesia for both ears and mouth, with Claude in between, and it measures every
