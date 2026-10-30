@@ -1,0 +1,9 @@
+services:
+  voice-agent:
+    build: .
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs  # call metrics survive restarts
+    restart: unless-stopped
