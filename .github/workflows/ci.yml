@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements*.txt
+      - run: pip install -r requirements-dev.txt
+      - run: pytest -q
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t hinglish-voice-agent .
+      - name: Container starts and answers health checks
+        run: |
+          docker run -d --name agent -p 8000:8000 hinglish-voice-agent
+          for i in $(seq 1 20); do curl -fs localhost:8000/api/health && exit 0; sleep 1; done
+          docker logs agent; exit 1

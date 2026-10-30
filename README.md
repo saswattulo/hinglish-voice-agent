@@ -1,5 +1,7 @@
 # Hinglish Voice Agent
 
+[![CI](https://github.com/saswattulo/hinglish-voice-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/saswattulo/hinglish-voice-agent/actions/workflows/ci.yml)
+
 A browser voice agent that books appointments at a (pretend) Bangalore clinic, in Hinglish.
 It runs on Cartesia for both ears and mouth, with Claude in between, and it measures every
 step of every turn so the delay can be shown and tuned.
@@ -49,7 +51,26 @@ the cleanest barge-in. `localhost` counts as a secure origin, so the mic works w
 Pick a voice that suits Hinglish in the Cartesia playground and set `TTS_VOICE_ID`.
 `TTS_SPEED` (0.6 to 1.5) and `TTS_EMOTION` tune delivery.
 
-Tests run fully offline with fake Cartesia and Claude clients:
+Or with Docker (metrics are kept in `./logs` on the host):
+
+```bash
+cp .env.example .env        # add your keys
+docker compose up --build
+```
+
+### Check your keys and setup
+
+```bash
+python -m scripts.smoke
+```
+
+This makes one real call to each service and prints the timings: Sonic speaks a Hinglish
+sentence (saved to `logs/smoke/tts.wav`), Ink transcribes that same audio streamed in real
+time and ends the turn, and Claude answers one caller line. The report is saved to
+`logs/smoke/<timestamp>.json`. Run it first when setting up on a new machine or network.
+
+Tests run fully offline with fake Cartesia and Claude clients, and CI runs them on every
+push and pull request along with a Docker build and health check:
 
 ```bash
 pytest
@@ -98,7 +119,7 @@ app/
   clinic.py    clinic data, tools, system prompt
   metrics.py   per-call / per-turn recorder, persistence, percentiles
 static/        call page, mic AudioWorklet, dashboard
-scripts/       report.py
+scripts/       report.py (latency percentiles), smoke.py (live key and latency check)
 tests/         offline tests with fake STT, TTS and Claude
 ```
 
@@ -118,5 +139,5 @@ Claude requests opt into server-side refusal fallbacks (`fallbacks: "default"`).
 
 - Phone calls: plug a telephony provider's media stream into the same `CallSession`
   (8 kHz μ-law in and out are both supported by Cartesia).
-- Docker image and a one-command cloud deploy.
+- One-command cloud deploy (the Docker image is ready).
 - An eval set of recorded Hinglish calls, scored automatically, run in CI with latency budgets.
